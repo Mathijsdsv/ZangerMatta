@@ -25,18 +25,31 @@
   html { scroll-behavior: smooth; }
   body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
 
-  /* CURSOR */
-  .cursor { position: fixed; width: 12px; height: 12px; background: var(--white); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); mix-blend-mode: difference; }
-  .cursor-ring { position: fixed; width: 40px; height: 40px; border: 1px solid rgba(245,245,240,0.35); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.25s ease, height 0.25s ease; }
-  body:has(a:hover) .cursor-ring, body:has(button:hover) .cursor-ring { width: 64px; height: 64px; }
+  /* CURSOR — glazen ring stijl */
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(245,245,240,0.35);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    backdrop-filter: blur(2px);
+    background: rgba(255,255,255,0.04);
+    transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    width: 48px; height: 48px;
+    border-color: rgba(245,245,240,0.6);
+    background: rgba(255,255,255,0.07);
+  }
 
   /* NAV */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 68px; background: rgba(10,10,10,0); border-bottom: 1px solid rgba(255,255,255,0); transition: background 0.4s, border-color 0.4s; }
   nav.scrolled { background: rgba(10,10,10,0.93); border-color: var(--border); backdrop-filter: blur(18px); }
   .nav-brand { display: flex; align-items: center; text-decoration: none; }
-  /* Logo afbeelding — zichtbaar als logo.png bestaat */
   .nav-logo-img { height: 36px; width: auto; display: block; }
-  /* Tekst fallback — zichtbaar als logo.png NIET bestaat */
   .nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.14em; color: var(--white); }
   .nav-links { display: flex; gap: 28px; }
   .nav-links a { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white-dim); text-decoration: none; transition: color 0.2s; }
@@ -48,10 +61,8 @@
 
   /* HERO */
   #hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  /* VIDEO achtergrond */
   .hero-video { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
   .hero-video video { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; filter: grayscale(30%) contrast(1.1); }
-  /* FOTO achtergrond — fallback als er geen video is, of als aanvulling */
   .hero-photo { position: absolute; inset: 0; z-index: 0; background-image: url('foto-hero.jpg'); background-size: cover; background-position: center top; opacity: 0.35; filter: grayscale(40%) contrast(1.1); transition: transform 8s ease; }
   .hero-photo.loaded { transform: scale(1.0); }
   .hero-overlay { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to bottom, rgba(10,10,10,0.25) 0%, rgba(10,10,10,0.05) 35%, rgba(10,10,10,0.65) 78%, rgba(10,10,10,1) 100%); }
@@ -124,8 +135,6 @@
   .spotify-embed iframe { display:block;width:100%; }
 
   /* AGENDA */
-  /* ─── SHOW TOEVOEGEN: kopieer een .show-item blok en pas de data aan ─── */
-  .agenda-header { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4px; }
   .shows-list { margin-top: 40px; }
   .show-item { display: grid; grid-template-columns: 110px 1fr auto; align-items: center; gap: 36px; padding: 24px 0; border-bottom: 1px solid var(--border); transition: background 0.2s; }
   .show-item:first-child { border-top: 1px solid var(--border); }
@@ -139,21 +148,17 @@
   .show-ticket a { display:inline-block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:11px 22px;border:1px solid var(--border-hover);color:var(--white);text-decoration:none;transition:background 0.2s,border-color 0.2s; }
   .show-ticket a:hover { background:var(--white-faint);border-color:var(--white); }
   .no-shows { padding:40px 0;font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:var(--white-dim);text-align:center; }
-
-  /* ARCHIEF — voorbije shows */
   .archive-toggle { display:flex;align-items:center;gap:12px;margin-top:48px;cursor:pointer;color:var(--white-dim);font-size:12px;letter-spacing:0.15em;text-transform:uppercase;border:none;background:none;font-family:'DM Sans',sans-serif;font-weight:300;padding:0;transition:color 0.2s; }
   .archive-toggle:hover { color:var(--white); }
   .archive-toggle .arrow { display:inline-block;transition:transform 0.3s;font-size:14px; }
   .archive-toggle.open .arrow { transform:rotate(180deg); }
   .archive-list { overflow:hidden;max-height:0;transition:max-height 0.45s ease; }
-  .archive-list.open { max-height:1200px; }
+  .archive-list.open { max-height:2400px; }
   .show-item.past { opacity:0.5; }
   .show-item.past:hover { opacity:0.75; }
   .show-item.past .show-ticket span { font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--white-dim); }
 
   /* FOTOS */
-  /* ─── FOTO TOEVOEGEN: kopieer een .foto-item en verander de src ─── */
-  /* ─── FOTO VERWIJDEREN: verwijder het hele .foto-item blok ─── */
   .fotos-grid { display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:230px;gap:5px;margin-top:44px; }
   .foto-item { position:relative;overflow:hidden;background:var(--surface); }
   .foto-item:nth-child(1) { grid-column:span 2;grid-row:span 2; }
@@ -215,14 +220,9 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="ring"></div>
 
-<!-- ═══════════════════════════════════════════════
-     NAVIGATIE
-     Logo: zet "logo.png" (of logo.svg) in dezelfde map.
-     De tekst "Zanger Matta" verschijnt als fallback.
-     ═══════════════════════════════════════════════ -->
+<!-- NAV -->
 <nav id="nav">
   <a href="#hero" class="nav-brand" id="navBrand">
     <img src="logo.png" alt="Zanger Matta" class="nav-logo-img" id="navLogo"
@@ -245,17 +245,11 @@
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════
-     HERO
-     VIDEO: zet "video.mp4" in dezelfde map voor een
-     video-achtergrond. Als het bestand ontbreekt,
-     valt de site terug op foto-hero.jpg.
-     ═══════════════════════════════════════════════ -->
+<!-- HERO -->
 <section id="hero">
   <div class="hero-photo" id="heroBg"></div>
   <div class="hero-video">
     <video autoplay muted loop playsinline id="heroVideo">
-      <!-- Vervang video.mp4 door jouw videobestand -->
       <source src="video.mp4" type="video/mp4">
     </video>
   </div>
@@ -288,35 +282,30 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     OVER
-     ═══════════════════════════════════════════════ -->
+<!-- OVER -->
 <div class="divider"></div>
 <div class="section-inner">
   <div class="section-label reveal">Over de artiest</div>
   <h2 class="section-title reveal d1">Zanger<br>Matta</h2>
   <div class="over-grid">
     <div class="over-photo-wrap reveal">
-      <!-- Vervang foto-over.jpg door jouw portretfoto -->
-      <img src="foto-over.jpeg" alt="Zanger Matta" class="over-photo"
-           onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'M21 15l-5-5L5 21\'/></svg><span>foto-over.jpg</span></div>'">
+      <img src="foto-over.png" alt="Zanger Matta" class="over-photo"
+           onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'M21 15l-5-5L5 21\'/></svg><span>foto-over.png</span></div>'">
     </div>
     <div class="over-text">
-      <p class="reveal">Schrijf hier een krachtige openingszin over Matta. Wie is hij, wat drijft hem?</p>
-      <p class="reveal d1">Meer over zijn achtergrond, zijn stijl en invloeden. Wat maakt zijn muziek uniek?</p>
-      <p class="reveal d2">Tours, samenwerkingen of bijzondere optredens die zijn carrière hebben gevormd.</p>
+      <p class="reveal">Wie kent hem niet?! Zanger Matta</p>
+      <p class="reveal d1">Wat begon als een grapje, is uitgegroeid tot een groot succes. Met hits als 'Duikboot' en 'Knallend Feest' trekt hij door de hele regio en weet hij overal het publiek mee te krijgen.</p>
+      <p class="reveal d2">Met optredens op onder andere Ackerfeesten, 7th Sunday, Kamping Trash en Lloret de Mar heeft hij inmiddels al heel wat bereikt in zijn carrière.</p>
       <div class="stat-row reveal d3">
-        <div class="stat-cell"><span class="stat-num">0</span><span class="stat-lbl">Albums</span></div>
-        <div class="stat-cell"><span class="stat-num">0k</span><span class="stat-lbl">Streams</span></div>
-        <div class="stat-cell"><span class="stat-num">0</span><span class="stat-lbl">Shows</span></div>
+        <div class="stat-cell"><span class="stat-num">3</span><span class="stat-lbl">Songs</span></div>
+        <div class="stat-cell"><span class="stat-num">15K+</span><span class="stat-lbl">Streams</span></div>
+        <div class="stat-cell"><span class="stat-num">58</span><span class="stat-lbl">Shows</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     MUZIEK
-     ═══════════════════════════════════════════════ -->
+<!-- MUZIEK -->
 <div class="divider"></div>
 <section class="section-full" id="muziek">
   <div class="section-inner" style="padding-top:110px;padding-bottom:110px;">
@@ -328,54 +317,45 @@
       <a href="https://open.spotify.com/artist/7xerTsBtsAcha0OVMAKwGx?si=LdH52-t3TECOULGS0QWYlw" target="_blank" class="reveal">Alles op Spotify →</a>
     </div>
     <div class="tracks-grid">
-
-      <!-- ─── TRACK 1 ─── data-link = de Spotify/YouTube URL van dit nummer -->
       <div class="track-card reveal" data-link="https://open.spotify.com/track/4ufgmXfTVk2vDinbNvvSsf?si=c4abe8847f314f31">
         <div class="track-cover">
-          <img src="cover1.jpeg" alt="Track 1"
+          <img src="cover1.jpg" alt="Duikboot"
                onerror="this.parentElement.innerHTML='<div class=\'track-cover-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><circle cx=\'12\' cy=\'12\' r=\'3\'/></svg><span>cover1.jpg</span></div>'">
           <div class="track-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </div>
         <div class="track-info">
-          <div class="track-title">Naam van het nummer</div>
+          <div class="track-title">Duikboot</div>
           <div class="track-meta">Zanger Matta</div>
-          <div class="track-year">2025</div>
+          <div class="track-year">2021</div>
         </div>
       </div>
-
-      <!-- ─── TRACK 2 ─── -->
-      <div class="track-card reveal d1" data-link="https://open.spotify.com/track/TRACK_ID_2">
+      <div class="track-card reveal d1" data-link="https://open.spotify.com/track/1KcUM6VUTPuxwgikUCLRh7?si=a67f963edf51481a">
         <div class="track-cover">
-          <img src="cover2.jpg" alt="Track 2"
-               onerror="this.parentElement.innerHTML='<div class=\'track-cover-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><circle cx=\'12\' cy=\'12\' r=\'3\'/></svg><span>cover2.jpg</span></div>'">
+          <img src="cover2.jpeg" alt="Knallend Feest"
+               onerror="this.parentElement.innerHTML='<div class=\'track-cover-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><circle cx=\'12\' cy=\'12\' r=\'3\'/></svg><span>cover2.jpeg</span></div>'">
           <div class="track-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </div>
         <div class="track-info">
-          <div class="track-title">Naam van het nummer</div>
+          <div class="track-title">Knallend Feest</div>
           <div class="track-meta">Zanger Matta</div>
-          <div class="track-year">2024</div>
+          <div class="track-year">2022</div>
         </div>
       </div>
-
-      <!-- ─── TRACK 3 ─── -->
-      <div class="track-card reveal d2" data-link="https://open.spotify.com/track/TRACK_ID_3">
+      <div class="track-card reveal d2" data-link="https://open.spotify.com/track/0evxZq4VWYLZjHXqsDpTdJ?si=e0d00e391e0a4fee">
         <div class="track-cover">
-          <img src="cover3.jpg" alt="Track 3"
-               onerror="this.parentElement.innerHTML='<div class=\'track-cover-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><circle cx=\'12\' cy=\'12\' r=\'3\'/></svg><span>cover3.jpg</span></div>'">
+          <img src="cover3.jpeg" alt="Duikboot Remix"
+               onerror="this.parentElement.innerHTML='<div class=\'track-cover-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><circle cx=\'12\' cy=\'12\' r=\'3\'/></svg><span>cover3.jpeg</span></div>'">
           <div class="track-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </div>
         <div class="track-info">
-          <div class="track-title">Naam van het nummer</div>
-          <div class="track-meta">Zanger Matta</div>
+          <div class="track-title">Duikboot Remix</div>
+          <div class="track-meta">Zanger Matta & Brian Jaxky</div>
           <div class="track-year">2024</div>
         </div>
       </div>
-
     </div>
-
-    <!-- Spotify embed. Vervang JOUW_SPOTIFY_ID door het ID uit je artiest-URL op Spotify -->
     <div class="spotify-embed reveal">
-      <iframe src="https://open.spotify.com/embed/artist/7xerTsBtsAcha0OVMAKwGx?si=LdH52-t3TECOULGS0QWYlw"
+      <iframe src="https://open.spotify.com/embed/artist/7xerTsBtsAcha0OVMAKwGx"
               height="152" frameborder="0" allowfullscreen=""
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"></iframe>
@@ -383,20 +363,14 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════
-     AGENDA
-     SHOW TOEVOEGEN: kopieer een .show-item blok,
-     pas dag, maand, jaar, venue, stad en ticketlink aan.
-     SHOW VERWIJDEREN: verwijder het hele .show-item blok.
-     ═══════════════════════════════════════════════ -->
+<!-- AGENDA -->
 <div class="divider"></div>
 <div class="section-inner" id="agenda">
   <div class="section-label reveal">Live</div>
   <h2 class="section-title reveal d1">Agenda</h2>
-
   <div class="shows-list" id="upcomingShows">
 
-    <!-- ─── SHOW 1 ─── -->
+    <!-- ─── SHOW TOEVOEGEN: kopieer dit blok en pas aan ─── -->
     <div class="show-item reveal">
       <div class="show-date">14<span>Mrt 2026</span></div>
       <div class="show-info">
@@ -407,7 +381,6 @@
       <div class="show-ticket"><a href="#" target="_blank">Tickets →</a></div>
     </div>
 
-    <!-- ─── SHOW 2 ─── -->
     <div class="show-item reveal d1">
       <div class="show-date">21<span>Apr 2026</span></div>
       <div class="show-info">
@@ -418,12 +391,8 @@
       <div class="show-ticket"><a href="#" style="opacity:0.4;pointer-events:none;">Uitverkocht</a></div>
     </div>
 
-    <!-- Als er geen shows zijn: verwijder de twee show-items hierboven en verwijder het commentaar hieronder -->
-    <!-- <div class="no-shows">Nieuwe shows worden binnenkort aangekondigd.</div> -->
-
   </div>
 
-  <!-- ARCHIEF — voorbije shows. Hetzelfde principe: kopieer/verwijder .show-item blokken. -->
   <button class="archive-toggle reveal" id="archiveToggle" onclick="toggleArchive()">
     <span>Voorbije shows</span>
     <span class="arrow">▼</span>
@@ -432,24 +401,73 @@
   <div class="archive-list" id="archiveList">
     <div class="shows-list" style="margin-top:0;">
 
-      <!-- ─── ARCHIEF SHOW 1 ─── -->
+      <!-- ─── ARCHIEF SHOW TOEVOEGEN: kopieer dit blok en pas aan ─── -->
       <div class="show-item past">
-        <div class="show-date">08<span>Nov 2025</span></div>
+        <div class="show-date">30<span>Mei 2025</span></div>
         <div class="show-info">
-          <div class="show-venue">Naam van het podium</div>
-          <div class="show-city">Stad, Nederland</div>
-          <div class="show-tags"><span class="tag">Live</span></div>
+          <div class="show-venue">Kamping Trash</div>
+          <div class="show-city">Sint Anthonis, Nederland</div>
+          <div class="show-tags"><span class="tag">Festival</span></div>
         </div>
         <div class="show-ticket"><span>Afgelopen</span></div>
       </div>
 
-      <!-- ─── ARCHIEF SHOW 2 ─── -->
       <div class="show-item past">
-        <div class="show-date">15<span>Sep 2025</span></div>
+        <div class="show-date">8<span>Jun 2025</span></div>
         <div class="show-info">
-          <div class="show-venue">Naam van het podium</div>
-          <div class="show-city">Stad, Nederland</div>
+          <div class="show-venue">7th Sunday</div>
+          <div class="show-city">Erp, Nederland</div>
           <div class="show-tags"><span class="tag">Festival</span></div>
+        </div>
+        <div class="show-ticket"><span>Afgelopen</span></div>
+      </div>
+
+      <div class="show-item past">
+        <div class="show-date">3<span>Mrt 2025</span></div>
+        <div class="show-info">
+          <div class="show-venue">Brouwplaats</div>
+          <div class="show-city">Sint Anthonis, Nederland</div>
+          <div class="show-tags"><span class="tag">Tentfeest</span></div>
+        </div>
+        <div class="show-ticket"><span>Afgelopen</span></div>
+      </div>
+
+      <div class="show-item past">
+        <div class="show-date">1<span>Mrt 2025</span></div>
+        <div class="show-info">
+          <div class="show-venue">CV De Hanen</div>
+          <div class="show-city">Ledeacker, Nederland</div>
+          <div class="show-tags"><span class="tag">Carnaval</span></div>
+        </div>
+        <div class="show-ticket"><span>Afgelopen</span></div>
+      </div>
+
+      <div class="show-item past">
+        <div class="show-date">19 & 20<span>Nov 2022</span></div>
+        <div class="show-info">
+          <div class="show-venue">Ackerfeesten</div>
+          <div class="show-city">Ledeacker, Nederland</div>
+          <div class="show-tags"><span class="tag">Festival</span></div>
+        </div>
+        <div class="show-ticket"><span>Afgelopen</span></div>
+      </div>
+
+      <div class="show-item past">
+        <div class="show-date">1 t/m 5<span>Aug 2022</span></div>
+        <div class="show-info">
+          <div class="show-venue">The Box</div>
+          <div class="show-city">Lloret de Mar, Spanje</div>
+          <div class="show-tags"><span class="tag">Club</span></div>
+        </div>
+        <div class="show-ticket"><span>Afgelopen</span></div>
+      </div>
+
+      <div class="show-item past">
+        <div class="show-date">2<span>Jul 2022</span></div>
+        <div class="show-info">
+          <div class="show-venue">'t Leker Live</div>
+          <div class="show-city">Ledeacker, Nederland</div>
+          <div class="show-tags"><span class="tag">Tentfeest</span></div>
         </div>
         <div class="show-ticket"><span>Afgelopen</span></div>
       </div>
@@ -458,13 +476,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     FOTO'S
-     FOTO TOEVOEGEN: kopieer een .foto-item blok,
-     verander src naar jouw bestandsnaam.
-     FOTO VERWIJDEREN: verwijder het hele .foto-item blok.
-     Let op: de eerste foto is groter (2x2 grid).
-     ═══════════════════════════════════════════════ -->
+<!-- FOTOS -->
 <div class="divider"></div>
 <section class="section-full" id="fotos">
   <div class="section-inner" style="padding-top:110px;padding-bottom:110px;">
@@ -472,6 +484,8 @@
     <h2 class="section-title reveal d1">Foto's</h2>
     <div class="fotos-grid">
 
+      <!-- ─── FOTO TOEVOEGEN: kopieer een blok, verander de src ─── -->
+      <!-- ─── FOTO VERWIJDEREN: verwijder het hele foto-item blok ─── -->
       <div class="foto-item reveal">
         <img src="foto1.jpg" alt="Zanger Matta"
              onerror="this.parentElement.innerHTML='<div class=\'foto-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'M21 15l-5-5L5 21\'/></svg><span>foto1.jpg</span></div>'">
@@ -502,19 +516,11 @@
       </div>
 
     </div>
-    <p class="fotos-note reveal">Foto's toevoegen. Zet ze in dezelfde map als index.html en noem ze <code>foto1.jpg</code> t/m <code>foto7.jpg</code> (of verder).</p>
+    <p class="fotos-note reveal">Foto's toevoegen: zet ze in dezelfde map als index.html en noem ze <code>foto1.jpg</code> t/m <code>foto7.jpg</code> (of verder).</p>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════
-     CONTACT
-     Formulier werkt via Formspree:
-     1. Ga naar formspree.io en maak gratis account aan
-     2. Maak een nieuw formulier aan
-     3. Kopieer jouw ID (bijv. xpzgkwqr)
-     4. Vervang JOUW_FORMSPREE_ID hieronder door dat ID
-     Ingevulde formulieren komen dan in jouw inbox.
-     ═══════════════════════════════════════════════ -->
+<!-- CONTACT -->
 <div class="divider"></div>
 <div class="section-inner" id="contact">
   <div class="section-label reveal">Bereikbaar</div>
@@ -527,14 +533,15 @@
       <div class="socials-block reveal d3">
         <div class="socials-title">Volg Zanger Matta</div>
         <div class="socials-links">
-          <a href="https://instagram.com/JOUWINSTAGRAM" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Instagram</a>
-          <a href="https://facebook.com/JOUWFACEBOOK" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a>
+          <a href="https://instagram.com/zangermatta" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Instagram</a>
+          <a href="https://facebook.com/zangermatta" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</a>
           <a href="https://x.com/JOUWX" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.629L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X</a>
-          <a href="https://open.spotify.com/artist/JOUWSPOTIFY" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>Spotify</a>
-          <a href="https://youtube.com/@JOUWYOUTUBE" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>YouTube</a>
+          <a href="https://open.spotify.com/artist/7xerTsBtsAcha0OVMAKwGx" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>Spotify</a>
+          <a href="https://youtube.com/UCyb0uDcQOFSw3z4QlaArMKQ" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>YouTube</a>
         </div>
       </div>
     </div>
+    <!-- Formulier via Formspree: vervang JOUW_FORMSPREE_ID door jouw ID van formspree.io -->
     <form class="contact-form reveal d1"
           action="https://formspree.io/f/JOUW_FORMSPREE_ID"
           method="POST">
@@ -567,52 +574,49 @@
   </div>
   <div class="footer-copy">© 2025 Zanger Matta. Alle rechten voorbehouden.</div>
   <div class="footer-socials">
-    <a href="https://instagram.com/JOUWINSTAGRAM" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-    <a href="https://facebook.com/JOUWFACEBOOK" target="_blank"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+    <a href="https://instagram.com/zangermatta" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+    <a href="https://facebook.com/zangermatta" target="_blank"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
     <a href="https://x.com/JOUWX" target="_blank"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.629L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-    <a href="https://open.spotify.com/artist/JOUWSPOTIFY" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></a>
-    <a href="https://youtube.com/@JOUWYOUTUBE" target="_blank"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    <a href="https://open.spotify.com/artist/7xerTsBtsAcha0OVMAKwGx" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></a>
+    <a href="https://youtube.com/UCyb0uDcQOFSw3z4QlaArMKQ" target="_blank"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
   </div>
 </footer>
 
 <script>
-  // Custom cursor
-  const cur = document.getElementById('cursor'), ring = document.getElementById('ring');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-  (function loop(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+  // Glazen cursor
+  const ring = document.getElementById('ring');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+  (function loop(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
 
   // Nav scroll
-  const nav=document.getElementById('nav');
-  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60), {passive:true});
 
   // Hero parallax
-  const bg=document.getElementById('heroBg');
+  const bg = document.getElementById('heroBg');
   bg.classList.add('loaded');
-  window.addEventListener('scroll',()=>{bg.style.transform='translateY('+(scrollY*0.22)+'px)';},{passive:true});
+  window.addEventListener('scroll', () => { bg.style.transform='translateY('+(scrollY*0.22)+'px)'; }, {passive:true});
 
-  // Video fallback — als video.mp4 niet laadt, toon de fotobg
-  const vid=document.getElementById('heroVideo');
-  vid.addEventListener('error',()=>{vid.parentElement.style.display='none';bg.style.opacity='0.38';});
-  vid.addEventListener('emptied',()=>{vid.parentElement.style.display='none';bg.style.opacity='0.38';});
+  // Video fallback
+  const vid = document.getElementById('heroVideo');
+  vid.addEventListener('error', () => { vid.parentElement.style.display='none'; bg.style.opacity='0.38'; });
 
   // Scroll reveal
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});
-  },{threshold:0.08,rootMargin:'0px 0px -30px 0px'});
-  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, {threshold:0.08, rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   // Track cards
-  document.querySelectorAll('.track-card').forEach(c=>{
-    c.addEventListener('click',()=>{const l=c.dataset.link;if(l&&l.includes('http'))window.open(l,'_blank');});
+  document.querySelectorAll('.track-card').forEach(c => {
+    c.addEventListener('click', () => { const l=c.dataset.link; if(l&&l.includes('http')) window.open(l,'_blank'); });
   });
 
   // Archief toggle
   function toggleArchive(){
-    const btn=document.getElementById('archiveToggle');
-    const list=document.getElementById('archiveList');
-    btn.classList.toggle('open');
-    list.classList.toggle('open');
+    document.getElementById('archiveToggle').classList.toggle('open');
+    document.getElementById('archiveList').classList.toggle('open');
   }
 </script>
 </body>
