@@ -12,19 +12,27 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.zangermatta.nl/">
 
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="icon" type="image/png" href="logo-wit.png" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="logo-zwart.png" media="(prefers-color-scheme: light)">
+
 <!-- Open Graph — voor Facebook en WhatsApp previews -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.zangermatta.nl/">
 <meta property="og:title" content="Zanger Matta — Officiële Website">
 <meta property="og:description" content="Hits als Duikboot en Knallend Feest. Bekijk de agenda en boek Zanger Matta voor jouw feest of festival.">
-<meta property="og:image" content="https://www.zangermatta.nl/foto-hero.png">
+<meta property="og:image" content="https://www.zangermatta.nl/foto-hero.jpg">
 <meta property="og:locale" content="nl_NL">
 
 <!-- Twitter/X Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Zanger Matta — Officiële Website">
 <meta name="twitter:description" content="Hits als Duikboot en Knallend Feest. Bekijk de agenda en boek Zanger Matta.">
-<meta name="twitter:image" content="https://www.zangermatta.nl/foto-hero.png">
+<meta name="twitter:image" content="https://www.zangermatta.nl/foto-hero.jpg">
 
 <!-- Structured Data — Google begrijpt hiermee dat dit een muzikant is -->
 <script type="application/ld+json">
@@ -33,7 +41,7 @@
   "@type": "MusicGroup",
   "name": "Zanger Matta",
   "url": "https://www.zangermatta.nl",
-  "image": "https://www.zangermatta.nl/foto-hero.png",
+  "image": "https://www.zangermatta.nl/foto-hero.jpg",
   "description": "Zanger Matta, bekend van hits als Duikboot en Knallend Feest. Live optredens door heel Nederland.",
   "genre": ["Feestmuziek", "Pop"],
   "sameAs": [
@@ -76,20 +84,24 @@
   body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
 
   /* CURSOR — glazen ring stijl */
-    .cursor-ring {
-      position: fixed;
-      width: 8px; height: 8px;
-      background: rgba(245,245,240,0.7);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-    }
-    body:has(a:hover) .cursor-ring,
-    body:has(button:hover) .cursor-ring {
-      width: 12px; height: 12px;
-      background: rgba(245,245,240,0.9);
-    }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(245,245,240,0.35);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    backdrop-filter: blur(2px);
+    background: rgba(255,255,255,0.04);
+    transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    width: 48px; height: 48px;
+    border-color: rgba(245,245,240,0.6);
+    background: rgba(255,255,255,0.07);
+  }
 
   /* NAV */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 68px; background: rgba(10,10,10,0); border-bottom: 1px solid rgba(255,255,255,0); transition: background 0.4s, border-color 0.4s; }
@@ -109,7 +121,7 @@
   #hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .hero-video { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
   .hero-video video { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; filter: grayscale(30%) contrast(1.1); }
-  .hero-photo { position: absolute; inset: 0; z-index: 0; background-image: url('achtergrond.png'); background-size: cover; background-position: center top; opacity: 0.35; filter: grayscale(40%) contrast(1.1); transition: transform 8s ease; }
+  .hero-photo { position: absolute; inset: 0; z-index: 0; background-image: url('foto-hero.jpg'); background-size: cover; background-position: center top; opacity: 0.35; filter: grayscale(40%) contrast(1.1); transition: transform 8s ease; }
   .hero-photo.loaded { transform: scale(1.0); }
   .hero-overlay { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to bottom, rgba(10,10,10,0.25) 0%, rgba(10,10,10,0.05) 35%, rgba(10,10,10,0.65) 78%, rgba(10,10,10,1) 100%); }
   .hero-grain { position: absolute; inset: 0; z-index: 3; opacity: 0.035; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 200px; pointer-events: none; }
@@ -377,7 +389,7 @@
       </div>
       <div class="track-card reveal d1" data-link="https://open.spotify.com/track/1KcUM6VUTPuxwgikUCLRh7?si=a67f963edf51481a">
         <div class="track-cover">
-          <img src="cover2.jpg" alt="Knallend Feest"
+          <img src="cover2.jpeg" alt="Knallend Feest"
                onerror="this.parentElement.innerHTML='<div class=\'track-cover-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><circle cx=\'12\' cy=\'12\' r=\'3\'/></svg><span>cover2.jpeg</span></div>'">
           <div class="track-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </div>
@@ -389,7 +401,7 @@
       </div>
       <div class="track-card reveal d2" data-link="https://open.spotify.com/track/0evxZq4VWYLZjHXqsDpTdJ?si=e0d00e391e0a4fee">
         <div class="track-cover">
-          <img src="cover3.jpg" alt="Duikboot Remix"
+          <img src="cover3.jpeg" alt="Duikboot Remix"
                onerror="this.parentElement.innerHTML='<div class=\'track-cover-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><circle cx=\'12\' cy=\'12\' r=\'3\'/></svg><span>cover3.jpeg</span></div>'">
           <div class="track-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         </div>
@@ -560,6 +572,9 @@
         <img src="foto7.jpg" alt="Zanger Matta"
              onerror="this.parentElement.innerHTML='<div class=\'foto-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'M21 15l-5-5L5 21\'/></svg><span>foto7.jpg</span></div>'">
       </div>
+
+    </div>
+    <p class="fotos-note reveal">Foto's toevoegen: zet ze in dezelfde map als index.html en noem ze <code>foto1.jpg</code> t/m <code>foto7.jpg</code> (of verder).</p>
   </div>
 </section>
 
@@ -628,10 +643,9 @@
 <script>
   // Glazen cursor
   const ring = document.getElementById('ring');
-  document.addEventListener('mousemove', e => {
-    ring.style.left = e.clientX + 'px';
-    ring.style.top = e.clientY + 'px';
-  });
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+  (function loop(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
 
   // Nav scroll
   const nav = document.getElementById('nav');
